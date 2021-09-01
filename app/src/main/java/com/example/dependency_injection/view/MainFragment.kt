@@ -27,6 +27,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
     private val observeUsers = Observer<List<GithubUser>>() {
         adapter.refresh(it)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
