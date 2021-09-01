@@ -1,6 +1,7 @@
 package com.example.dependency_injection.repository
 
 import com.example.dependency_injection.model.GithubRepositoryResponse
+import com.example.dependency_injection.model.GithubUserResponse
 import com.example.dependency_injection.service.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,6 +47,30 @@ class GithubRepository() {
             override fun onFailure(call: Call<GithubRepositoryResponse>, t: Throwable) {
                 onComplete(null, t.message)
             }
+        })
+
+    }
+
+    fun fetchUsers(onComplete: (GithubUserResponse?, String?) -> Unit) {
+
+        val call = githubServices.fetchUsers()
+
+        call.enqueue(object : Callback<GithubUserResponse> {
+            override fun onResponse(
+                call: Call<GithubUserResponse>,
+                response: Response<GithubUserResponse>
+            ) {
+                if (response.body() != null) {
+                    onComplete(response.body(), null)
+                } else {
+                    onComplete(null, "Erro diferente XD")
+                }
+            }
+
+            override fun onFailure(call: Call<GithubUserResponse>, t: Throwable) {
+                onComplete(null, t.message)
+            }
+
         })
 
     }
